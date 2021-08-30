@@ -1,4 +1,4 @@
-<form novalidate #myForm="ngForm">
+<!-- <form novalidate #myForm="ngForm">
     <kendo-grid
         [data]="view | async"
         [height]="533"
@@ -51,5 +51,70 @@ kendoGridSaveCommand type="button"
               <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
           </ng-template>
       </kendo-grid-command-column>
+    </kendo-grid>
+</form> -->
+
+<!-- <form novalidate #fileForm="ngForm">
+<kendo-upload [saveUrl]="uploadSaveUrl" [removeUrl]="uploadRemoveUrl" [autoUpload]="false"
+    [restrictions]="myRestrictions">
+</kendo-upload>
+</form> -->
+<!-- <form novalidate #fileForm="ngForm">
+    <input type="file" name="files" id="files" />
+    <button kendoButton (click)="uploadSelected()">Upload</button>
+</form> -->
+<!-- <style>
+    .k-clear-selected,
+    .k-upload-selected {
+        display: none !important;
+    }
+</style> -->
+<form novalidate #fileForm="ngForm">
+    <input type="file" name="files" (change)="fileChange($event)" id="files" />
+    <button kendoButton (click)="uploadSelected()">Upload</button>
+</form>
+<!-- <input (change)="fileChange($event)" type="file" class="custom-file-input" id="inputGroupFile01"> -->
+
+
+<form novalidate #myForm="ngForm">
+    <kendo-grid [data]="students" [height]="533" [pageable]="true" [sortable]="true"
+        (dataStateChange)="onStateChange($event)" (edit)="editHandler($event)" (cancel)="cancelHandler($event)"
+        (save)="saveHandler($event)" (remove)="removeHandler($event)" (add)="addHandler($event, myForm)"
+        [navigable]="true">
+        <!-- <ng-template kendoGridToolbarTemplate>
+            <button kendoGridAddCommand type="button">Add new</button>
+        </ng-template> -->
+        <kendo-grid-column field="name" title="User Name">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <input [(ngModel)]="dataItem.name" kendoGridFocusable name="name" class="k-textbox" required />
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="dob" title="Date of Birth">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <div class="example-wrapper" style="min-height: 400px">
+                    <kendo-datepicker [(value)]="dataItem.dob"></kendo-datepicker>
+                </div>
+                <!-- <input [(ngModel)]="dataItem.dob" kendoGridFocusable name="dob" class="k-textbox" required /> -->
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="age" title="Age">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <input type="number" [(ngModel)]="dataItem.age" kendoGridFocusable name="age" class="k-textbox"
+                    required />
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="email" title="Email">
+            <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+                <input [(ngModel)]="dataItem.email" kendoGridFocusable name="email" class="k-textbox" required />
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-command-column title="command">
+            <ng-template kendoGridCellTemplate let-isNew="isNew">
+                <button kendoGridEditCommand type="button" [primary]="true">Edit</button>
+                <button kendoGridRemoveCommand type="button">Remove</button>
+                <button kendoGridSaveCommand type="button">{{ isNew ? 'Add' : 'Update' }}</button>
+                <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+            </ng-template>
+        </kendo-grid-command-column>
     </kendo-grid>
 </form>

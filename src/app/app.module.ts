@@ -1,14 +1,12 @@
-import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { GridModule } from '@progress/kendo-angular-grid';
 
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StudnetModule } from './stundent/student.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EditService } from './core/services/edit.service';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,19 +16,12 @@ import { EditService } from './core/services/edit.service';
   BrowserModule,
     AppRoutingModule,
     StudnetModule,
-    HttpClientModule,
-    HttpClientJsonpModule,
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    GridModule
+    GraphQLModule,
+    HttpClientModule,
   ],
   providers: [
-    {
-      deps: [HttpClient],
-      provide: EditService,
-      useFactory: (jsonp: HttpClient) => () => new EditService(jsonp)
-    }
   ],
   bootstrap: [AppComponent]
 })
