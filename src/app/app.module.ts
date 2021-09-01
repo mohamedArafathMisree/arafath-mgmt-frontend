@@ -7,21 +7,27 @@ import { StudnetModule } from './stundent/student.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NotificationModule } from '@progress/kendo-angular-notification';
+import { userListComponent } from './stundent';
+
+
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-  BrowserModule,
+    BrowserModule,
     AppRoutingModule,
     StudnetModule,
     BrowserModule,
     BrowserAnimationsModule,
     GraphQLModule,
     HttpClientModule,
+    NotificationModule,
   ],
   providers: [
+    userListComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SocketService } from './core/services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'arafath-mgmt-front-end';
 
-  
+  constructor(private socketService: SocketService) {
+    this.socketService.openSocket()
+  }
 }
