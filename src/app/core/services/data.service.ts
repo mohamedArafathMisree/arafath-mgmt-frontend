@@ -1,108 +1,52 @@
-import { Component, OnInit } from "@angular/core";
-import { observable, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { OnInit } from "@angular/core";
 import { Injectable } from "@angular/core";
-import { Apollo, gql } from "apollo-angular";
+import { Apollo } from "apollo-angular";
 import { HttpClient } from "@angular/common/http";
 import { Student } from "../models/Student";
+import { shareReplay } from 'rxjs/operators';
+import { DELETE_STUDENT, GET_ALL_STUDENTS, UPDATE_STUDENT } from "../const/queries";
+
+
 
 @Injectable()
 export class DataService implements OnInit {
 
-  public students = new Observable();
+  public students: Student[] = []
 
-  constructor(private apollo: Apollo, private http: HttpClient) { }
+
+
+  constructor(private apolloService: Apollo, private http: HttpClient) { }
 
   ngOnInit() {
-    console.log("data");
   }
 
   getAllStudents() {
-    return this.apollo.watchQuery({
-      query: gql`
-        {
-          getAllStudents {
-            id
-            name
-            dob
-            email
-            age
-          }
-        }
-      `,
-    });
+    return this.apolloService
+      .watchQuery({
+        query: GET_ALL_STUDENTS
+      })
+      .valueChanges.pipe(shareReplay(1));
   }
+
   deleteStudent(payLoad: Student) {
-    let _data;
-    console.log("");
-
     let studentId = payLoad.id;
-
-    const DELETE_STUDENT = gql`
-      mutation removeStudent($id: String!) {
-        removeStudent(id: $id) {
-          id
-        }
-      }
-    `;
-
-    this.apollo
+    return this.apolloService
       .mutate({
         mutation: DELETE_STUDENT,
         variables: {
           id: studentId,
         },
-      })
-      .subscribe(
-        ({ data }) => {
-          return data
-          this.getAllStudents();
-          console.log("got data", data);
-        },
-        (error) => {
-          console.log("there was an error sending the query", error);
-        }
-      );
+      }).pipe(shareReplay(1));
   }
 
   updateStudent(payLoad: Student) {
     let studentData = payLoad;
-    console.log("ll");
-
-    const UPDATE_STUDENT = gql`
-      mutation updateStudent($student: UpdateStudentInput!) {
-        updateStudent(studentInput: $student) {
-          id
-        }
-      }
-    `;
-
-    this.apollo
+    return this.apolloService
       .mutate({
         mutation: UPDATE_STUDENT,
         variables: {
           student: studentData,
         },
-      })
-      .subscribe(
-        ({ data }) => {
-          console.log("got data", data);
-          return data
-        },
-        (error) => {
-          console.log("there was an error sending the query", error);
-        }
-      );
-  }
-
-  uploadSelected(file: any) {
-    var formdata = new FormData();
-    formdata.append("file", file, "Data.xlsx");
-
-    this.http
-      .post("http://localhost:7000/api/upload", formdata)
-      .subscribe((response) => {
-        console.log("response received is ", response);
-      });
+      }).pipe(shareReplay(1));
   }
 }

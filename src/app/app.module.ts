@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationModule } from '@progress/kendo-angular-notification';
-import { userListComponent } from './stundent';
 
 
 
@@ -27,7 +26,6 @@ import { userListComponent } from './stundent';
     NotificationModule,
   ],
   providers: [
-    userListComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -1,23 +1,23 @@
 import * as SC from "socketcluster-client";
 import { Injectable } from "@angular/core";
 import { NotificationService } from "@progress/kendo-angular-notification";
-import { userListComponent } from "src/app/stundent";
+import { EventEmitter, Output } from "@angular/core";
+import { socketResources } from "../const/urls";
 
 @Injectable()
 export class SocketService {
+
+    success: EventEmitter<String> = new EventEmitter<String>();
     private socket: any;
     public data: any;
 
-    constructor(private notificationSrvice: NotificationService, private userList: userListComponent) {
+    constructor(private notificationSrvice: NotificationService) {
         // Connect Socket with server URL
         this.openSocket();
     }
 
     openSocket() {
-        let socket = SC.create({
-            hostname: "localhost",
-            port: 8000,
-        });
+        let socket = SC.create(socketResources);
 
         (async () => {
             // Subscribe to a channel.
@@ -34,11 +34,9 @@ export class SocketService {
                         this.showNotification("File Upload Faild", "error", false);
                     } else {
                         this.showNotification("File Uploaded Successfuly", "success", true);
-                        setTimeout(() => { this.userList.refresh() }, 2000);
+                        this.success.emit('-successful-');
 
                     }
-
-                    // ...
                 }
             })();
         })();
