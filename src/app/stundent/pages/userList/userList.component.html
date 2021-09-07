@@ -13,7 +13,7 @@
         (save)="saveHandler($event)" (remove)="removeHandler($event)" (add)="addHandler($event, myForm)"
         [navigable]="true">
         <!-- <ng-template kendoGridToolbarTemplate>
-            <button kendoGridAddCommand type="button">Add new</button>
+            <button id kendoGridAddCommand type="button">Add new</button>
         </ng-template> -->
         <kendo-grid-column field="name" title="User Name">
             <ng-template kendoGridEditTemplate let-dataItem="dataItem">
