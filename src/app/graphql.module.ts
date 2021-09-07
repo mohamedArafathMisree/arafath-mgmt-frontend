@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { APOLLO_OPTIONS } from 'apollo-angular';
 import { ApolloClientOptions, DefaultOptions, InMemoryCache } from '@apollo/client/core';
 import { HttpLink } from 'apollo-angular/http';
-import { graphQLuri } from './core/const/urls';
+// import { graphQLuri } from './core/const/urls';
+import { environment } from 'src/environments/environment.dev';
 
 
 
 
-const uri = graphQLuri; // <-- add the URL of the GraphQL server here
+const uri = environment.graphQLurl; // <-- add the URL of the GraphQL server here
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {

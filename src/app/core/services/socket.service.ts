@@ -2,7 +2,6 @@ import * as SC from "socketcluster-client";
 import { Injectable } from "@angular/core";
 import { NotificationService } from "@progress/kendo-angular-notification";
 import { EventEmitter, Output } from "@angular/core";
-import { socketResources } from "../const/urls";
 
 @Injectable()
 export class SocketService {
@@ -17,7 +16,10 @@ export class SocketService {
     }
 
     openSocket() {
-        let socket = SC.create(socketResources);
+        let socket = SC.create({
+            hostname: "localhost",
+            port: 8000,
+        });
 
         (async () => {
             // Subscribe to a channel.

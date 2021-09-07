@@ -10,6 +10,12 @@ import { DataService } from "../core/services/data.service";
 import { ReactiveFormsModule } from '@angular/forms';
 import { SocketService } from '../core/services/socket.service';
 import { CommonModule } from '@angular/common';
+import { DialogModule } from "@progress/kendo-angular-dialog";
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserModule } from "@angular/platform-browser";
+
+
 
 
 
@@ -23,7 +29,11 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     UploadsModule,
     DateInputsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DialogModule,
+    ButtonsModule,
+    BrowserModule,
+    BrowserAnimationsModule
   ],
   providers: [
     DataService,

@@ -13,7 +13,7 @@ import { UploadEvent } from "@progress/kendo-angular-upload";
 import * as moment from "moment";
 import { FormatSettings } from "@progress/kendo-angular-dateinputs";
 import { SocketService } from "src/app/core/services/socket.service";
-import { uploadSaveUrl } from "src/app/core/const/urls";
+import { environment } from "src/environments/environment.dev";
 
 
 @Component({
@@ -24,7 +24,11 @@ import { uploadSaveUrl } from "src/app/core/const/urls";
 export class userListComponent implements OnInit {
     private query: any;
 
-    public uploadSaveUrl = uploadSaveUrl
+    public opened = false;
+    public dialogResult = false;
+
+
+    public uploadSaveUrl = environment.uploadSaveUrl
 
     public myForm: FormGroup | undefined;
     fileInputLabel: string | undefined;
@@ -51,6 +55,7 @@ export class userListComponent implements OnInit {
         displayFormat: "dd/MM/yyyy",
         inputFormat: "dd/MM/yy",
     };
+    removeDataItem: any;
 
     constructor(
         // @Inject(EditService) editServiceFactory: any,
@@ -66,7 +71,7 @@ export class userListComponent implements OnInit {
             console.log(msg);
 
             if (msg == "-successful-") {
-                this.query()
+                this.getAllStudents()
             }
         });
 
@@ -169,14 +174,17 @@ export class userListComponent implements OnInit {
     }
 
     public async removeHandler({ dataItem }: any) {
-        let _result;
-        this.dataService.deleteStudent(dataItem).subscribe(data => {
-            console.log(data);
+        this.opened = true;
 
-        })
-        console.log(_result);
+        this.removeDataItem = dataItem
+        // let _result;
+        // this.dataService.deleteStudent(dataItem).subscribe(data => {
+        //     console.log(data);
 
-        setTimeout(() => { this.getAllStudents() }, 2000);
+        // })
+        // console.log(_result);
+
+        // setTimeout(() => { this.getAllStudents() }, 2000);
 
     }
 
@@ -201,5 +209,25 @@ export class userListComponent implements OnInit {
     public refresh() {
         this.getAllStudents();
     }
+
+    public close(status: any) {
+        console.log(`Dialog result: ${status}`);
+        if (status == 'yes') {
+
+            let _result;
+            this.dataService.deleteStudent(this.removeDataItem).subscribe(data => {
+                console.log(data);
+
+            })
+            console.log(_result);
+
+            setTimeout(() => { this.getAllStudents() }, 2000);
+            this.dialogResult = true
+        } else {
+            this.dialogResult = false
+        }
+        this.opened = false;
+    }
+
 
 }
